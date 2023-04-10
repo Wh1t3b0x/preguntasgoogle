@@ -43,7 +43,7 @@ SCOPES = ["https://www.googleapis.com/auth/forms.body","https://www.googleapis.c
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 API_KEY = get_secret()['monday_api']
 COLUMNA = "enlace8"
-BOARD = "3549229417"
+BOARD = "3549229417"354922941
 
 creds=None
 session = boto3.session.Session()
@@ -465,10 +465,9 @@ def lambda_handler(event, context):
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_SIX).execute()
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_FIVE).execute()
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_FOUR).execute()
-    form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_THREE).execute()
-    form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_TWO).execute()
-    form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_ONE).execute()
-    
+    #form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_THREE).execute()
+    #form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_TWO).execute()
+    #form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_ONE).execute()
     privacy_settings = {
     "settings": {
         "access": "ANYONE_WITH_LINK",
@@ -485,6 +484,8 @@ def lambda_handler(event, context):
     file = service.files().update(fileId=result["formId"], addParents=id_carpeta,
                                         removeParents=previous_parents,
                                         fields='id, parents').execute()
+                                        
+                                        
                         
     print(result['responderUri'])
     
@@ -492,8 +493,6 @@ def lambda_handler(event, context):
     correo=None
     #Enviamos el correo
     for elemento in fila['data']['items'][0]['column_values']:
-        if elemento['id']=='conectar_tableros60':
-            encargado=elemento['text']
         if elemento['id']=='dup__of_telefono_encargado':
             correo=elemento['text']
             break
@@ -502,9 +501,9 @@ def lambda_handler(event, context):
         exit()
         
     new_permission = {
-        "emailAddress": correo,
-        "role": 'commenter',
-        "type": "user"
+       "emailAddress": correo,
+       "role": 'commenter',
+       "type": "user"
     }
     
     #service.permissions().create(fileId=result["formId"], body=new_permission).execute()    
@@ -529,13 +528,10 @@ def lambda_handler(event, context):
     msgAlternative.attach(msgText)
     
     # We reference the image in the IMG SRC attribute by the ID we give it below
-    msgText = MIMEText(f'''<p>Estimado/a {encargado},
-
-En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes.
-
-Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora.
-
-Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
+    msgText = MIMEText(f'''<p>Estimado/a ,
+        En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes.
+        Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora.
+        Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
     msgAlternative.attach(msgText)
     
     # Send the email (this example assumes SMTP authentication is required)
@@ -548,5 +544,5 @@ Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
     
     "body": json.dumps(event),
 
-    
+
     }
