@@ -43,7 +43,7 @@ SCOPES = ["https://www.googleapis.com/auth/forms.body","https://www.googleapis.c
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
 API_KEY = get_secret()['monday_api']
 COLUMNA = "enlace8"
-BOARD = "3549229417"354922941
+BOARD = "3549229417"
 
 creds=None
 session = boto3.session.Session()
@@ -455,7 +455,7 @@ def lambda_handler(event, context):
     IMAGE = {"requests":[{"createItem":{"item":{"imageItem":{"image":{"sourceUri":"https://imagenes-correo-boleta.s3.amazonaws.com/fondo.png"}}},"location":{"index":0}}}]}
     
     result = form_service.forms().create(body=NEW_FORM).execute()
-    #Adds the question to the form
+    #Añade las preguntas a la encuesta
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_TWELVE).execute()
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_ELEVEN).execute()
     form_service.forms().batchUpdate(formId=result["formId"], body=NEW_QUESTION_TEN).execute()
@@ -528,10 +528,10 @@ def lambda_handler(event, context):
     msgAlternative.attach(msgText)
     
     # We reference the image in the IMG SRC attribute by the ID we give it below
-    msgText = MIMEText(f'''<p>Estimado/a ,
-        En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes.
-        Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora.
-        Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
+    msgText = MIMEText(f'''<p>Estimado/a , <br><br>
+    En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes. <br>
+    Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora. <br>
+    Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
     msgAlternative.attach(msgText)
     
     # Send the email (this example assumes SMTP authentication is required)
