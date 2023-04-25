@@ -108,8 +108,6 @@ def lambda_handler(event, context):
     # Crear el objeto de servicio de la API de Google Drive
     service = build('drive', 'v3', credentials=creds)
     
-    
-    id_PADRE='1E-nU0ZiWrxqfUYSSkADFPst6hYGQQz8c'
     # Especificar el nombre de la carpeta que se va a buscar
     nombre_carpeta = evento['pulseName']
     
@@ -508,7 +506,7 @@ def lambda_handler(event, context):
     
     #service.permissions().create(fileId=result["formId"], body=new_permission).execute()    
     # Define these once; use them twice!
-    strFrom = 'huellascapacitaciones@gmail.com'
+    strFrom = 'correo.a.usar@gmail.com'
     strTo = correo
     
     
@@ -529,16 +527,13 @@ def lambda_handler(event, context):
     
     # We reference the image in the IMG SRC attribute by the ID we give it below
     msgText = MIMEText(f'''<p>Estimado/a , <br><br>
-    En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes. <br>
-    Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora. <br>
-    Adjunto encontrará el link de la encuesta: {urlForm}
-    <br><br><img src="https://imagenes-correo-boleta.s3.amazonaws.com/pieBaeza.png" alt="imagen" width="50%" height="50%"></p>''', 'html')
+    mensaje que ira en el correo + url de la encuesta creada: {urlForm}</p>''', 'html')
     msgAlternative.attach(msgText)
     
     # Send the email (this example assumes SMTP authentication is required)
     smtp = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     smtp.ehlo()
-    smtp.login('huellascapacitaciones@gmail.com', "bakhvmguujfkjjmk")
+    smtp.login('correo.a.usar@gmail.com', "contraseña")
     smtp.sendmail(strFrom, [strTo], msgRoot.as_string())
     smtp.quit() 
     return{
