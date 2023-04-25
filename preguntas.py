@@ -531,7 +531,8 @@ def lambda_handler(event, context):
     msgText = MIMEText(f'''<p>Estimado/a , <br><br>
     En IZIED nos preocupamos por ofrecer siempre la mejor calidad en nuestros productos y servicios, y para ello necesitamos de la opinión de nuestros clientes. <br>
     Es por eso que le escribimos para invitarle a participar en nuestra encuesta de calidad, la cual nos permitirá conocer su experiencia con nuestra empresa y detectar posibles áreas de mejora. <br>
-    Adjunto encontrará el link de la encuesta: {urlForm}</p>''', 'html')
+    Adjunto encontrará el link de la encuesta: {urlForm}
+    <br><br><img src="https://imagenes-correo-boleta.s3.amazonaws.com/pieBaeza.png" alt="imagen" width="50%" height="50%"></p>''', 'html')
     msgAlternative.attach(msgText)
     
     # Send the email (this example assumes SMTP authentication is required)
